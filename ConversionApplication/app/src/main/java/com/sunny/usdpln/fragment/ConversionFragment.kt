@@ -1,6 +1,7 @@
 package com.sunny.usdpln.fragment
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,8 @@ class ConversionFragment : DaggerFragment() {
 
     @Inject
     lateinit var mViewModelFactory: ViewModelProvider.Factory
-
+    private lateinit var countdownTimer: CountDownTimer
+    private var count = 0
 
     private val mViewModel: ConversionViewModel by lazy {
         ViewModelProviders.of(this, mViewModelFactory).get(ConversionViewModel::class.java)
@@ -41,15 +43,44 @@ class ConversionFragment : DaggerFragment() {
     }
 
     private fun initObservers() {
+        mViewModel.getTimerLive().observe(this@ConversionFragment, Observer { t ->
+            when (t) {
+                true -> startTimer()
+                false -> countdownTimer.cancel()
+            }
+        })
+
+        mViewModel.getStatueViewLive().observe(this@ConversionFragment, Observer { str ->
+            tv_status.text = str
+        })
+
         mViewModel.getPLNValue().observe(this@ConversionFragment, Observer { plnValue ->
             tv_pln_value.text = plnValue
         })
 
-        mViewModel.fetchNewRates(0)
+        mViewModel.fetchNewRates(count++)
+
     }
 
+    private fun startTimer() {
+        countdownTimer = object : CountDownTimer(
+            START,
+            LAPSE
+        ) {
+            override fun onTick(millisUntilFinished: Long) {
+                mViewModel.onTimerTick(millisUntilFinished)
+            }
+
+            override fun onFinish() {
+                mViewModel.fetchNewRates(count++)
+            }
+        }.start()
+    }
 
     companion object {
         fun newInstance() = ConversionFragment()
+
+        const val START: Long = 60_000
+        const val LAPSE: Long = 1_000
     }
 }

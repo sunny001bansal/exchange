@@ -6,6 +6,8 @@ import javax.inject.Singleton
 @Singleton
 interface MyRepository {
 
-    fun fetchNewValueFromRemote(): LiveData<String>
+    fun fetchNewValueFromRemote(count: Int): LiveData<String>
+
+    fun cancelFetchJob()
 
 }

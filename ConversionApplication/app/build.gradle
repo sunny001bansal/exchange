@@ -31,6 +31,7 @@ dependencies {
     final VER_OKHTTP = '3.6.0'
     final VER_DAGGER = '2.24'
     final VER_INTERCEPTOR = '3.12.0'
+    final VER_COROUTINES = '1.2.1'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -53,6 +54,10 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$VER_DAGGER"
     kapt "com.google.dagger:dagger-compiler:$VER_DAGGER"
     kapt "com.google.dagger:dagger-android-processor:$VER_DAGGER"
+
+    //Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$VER_COROUTINES"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$VER_COROUTINES"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

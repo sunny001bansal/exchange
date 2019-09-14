@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Conversion</string>
+
+    <string name="frag_title_header">Exchange Data</string>
+    <string name="currency_pln">PLN</string>
+    <string name="currency_usd">USD</string>
+    <string name="one_usd">1</string>
 </resources>

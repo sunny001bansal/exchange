@@ -1,11 +1,16 @@
 package com.sunny.usdpln.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.sunny.usdpln.R
 import com.sunny.usdpln.fragment.ConversionFragment
+import dagger.android.support.DaggerAppCompatActivity
+import javax.inject.Inject
 
-class ConversionActivity : AppCompatActivity() {
+class ConversionActivity : DaggerAppCompatActivity() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

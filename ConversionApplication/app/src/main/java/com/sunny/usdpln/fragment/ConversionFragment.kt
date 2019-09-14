@@ -1,21 +1,28 @@
 package com.sunny.usdpln.fragment
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.sunny.usdpln.R
 import com.sunny.usdpln.viewmodel.ConversionViewModel
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class ConversionFragment : Fragment() {
+class ConversionFragment : DaggerFragment() {
+
+    @Inject
+    lateinit var mViewModelFactory: ViewModelProvider.Factory
 
     companion object {
         fun newInstance() = ConversionFragment()
     }
 
-    private lateinit var viewModel: ConversionViewModel
+    private val mViewModel: ConversionViewModel by lazy {
+        ViewModelProviders.of(this, mViewModelFactory).get(ConversionViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,11 +30,4 @@ class ConversionFragment : Fragment() {
     ): View {
         return inflater.inflate(R.layout.conversion_frag, container, false)
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ConversionViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
 }
